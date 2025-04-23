@@ -1,0 +1,39 @@
+{
+  "notes": [
+    {
+      "text": "Happiness is contagious!",
+      "mood": "happy",
+      "id": "520b"
+    },
+    {
+      "text": "Feeling calm today.",
+      "mood": "calm",
+      "id": "c604"
+    },
+    {
+      "text": "I am feeling a little down.",
+      "mood": "sad",
+      "id": "b96c"
+    },
+    {
+      "text": "I'm full of energy!",
+      "mood": "energetic",
+      "id": "441d"
+    },
+    {
+      "id": "d732",
+      "text": "zisan",
+      "mood": "happy"
+    },
+    {
+      "id": "a9e1",
+      "text": "canm benim",
+      "mood": "happy"
+    },
+    {
+      "id": "2765",
+      "text": "sevgili ben",
+      "mood": "calm"
+    }
+  ]
+}
