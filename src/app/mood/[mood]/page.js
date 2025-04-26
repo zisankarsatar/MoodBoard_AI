@@ -30,6 +30,23 @@ const moodData = {
   },
 };
 
+const getMoodEmoji = (mood) => {
+  switch (mood) {
+    case "happy":
+      return "😀";
+    case "sad":
+      return "😢";
+    case "calm":
+      return "😌";
+    case "energetic":
+      return "🏃‍♀️";
+    case "nostalgic":
+      return "📞";
+    default:
+      return "😶";
+  }
+};
+
 export default function MoodPage() {
   const { mood } = useParams(); // `useParams()` ile parametreyi alıyoruz.
   const [note, setNote] = useState(""); // Kullanıcı notunu burda tutuyoruz
@@ -106,6 +123,10 @@ export default function MoodPage() {
 
       <div className="w-full max-w-xl">
         <h2 className="text-2xl font-bold mb-4">Your Notes</h2>
+        <h1 className="text-5xl mb-4 flex items-center gap-2">
+          <span className="text-6xl animate-bounce">{getMoodEmoji(mood)}</span>
+          {mood.toUpperCase()} MOOD
+        </h1>
         <ul>
           {notes.map((note, index) => (
             <li
