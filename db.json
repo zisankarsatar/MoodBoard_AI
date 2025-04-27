@@ -3,37 +3,50 @@
     {
       "text": "Happiness is contagious!",
       "mood": "happy",
-      "id": "520b"
+      "id": "520b",
+      "date": "2025-04-25"
     },
     {
       "text": "Feeling calm today.",
       "mood": "calm",
-      "id": "c604"
+      "id": "c604",
+      "date": "2025-04-20"
     },
     {
       "text": "I am feeling a little down.",
       "mood": "sad",
-      "id": "b96c"
+      "id": "b96c",
+      "date": "2025-04-22"
     },
     {
       "text": "I'm full of energy!",
       "mood": "energetic",
-      "id": "441d"
-    },
-    {
-      "id": "d732",
-      "text": "zisan",
-      "mood": "happy"
+      "id": "441d",
+      "date": "2025-04-23"
     },
     {
       "id": "a9e1",
       "text": "canm benim",
-      "mood": "happy"
+      "mood": "happy",
+      "date": "2025-04-19"
     },
     {
       "id": "2765",
       "text": "sevgili ben",
-      "mood": "calm"
+      "mood": "calm",
+      "date": "2025-04-21"
+    },
+    {
+      "id": "76a1",
+      "mood": "happy",
+      "text": "I love nature.",
+      "date": "2025-04-27"
+    },
+    {
+      "id": "640c",
+      "mood": "happy",
+      "text": "If you stay a little longer I can convince you. ;)",
+      "date": "2025-04-27"
     }
   ]
 }

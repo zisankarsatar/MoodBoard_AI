@@ -58,20 +58,27 @@ export default function MoodPage() {
     setNote(e.target.value);
   };
 
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString("en-CA"); 
+
+  const newNote = {
+    mood,
+    text: note,
+    date: formattedDate, // <<< BURADA TARİHİ EKLİYORUZ
+  };
+
   useEffect(() => {
     fetch(`http://localhost:5001/notes?mood=${mood}`) // URL'de `mood` parametresi kullanarak filtreleme
       .then((response) => response.json())
-      .then((data) => setNotes(data));
+      .then((data) => {
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setNotes(sortedData);
+      });
   }, [mood]); // `mood` değiştiğinde notları yeniden çekiyoruz
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (note.trim()) {
-      const newNote = {
-        text: note,
-        mood: mood, // `mood` parametresi burada
-      };
-
       fetch("http://localhost:5001/notes", {
         method: "POST",
         headers: {
@@ -81,11 +88,17 @@ export default function MoodPage() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setNotes([...notes, data]); // Yeni notu state'e ekle
+          const sortedNotes = [...notes, data].sort((a, b) => new Date(b.date) - new Date(a.date));
+          setNotes(sortedNotes); // Yeni notu state'e ekle
           setNote(""); // Textarea'yı temizle
         });
     }
   };
+
+  function formatDate(dateString) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('tr-TR', options);
+  }
 
   return (
     <main
@@ -129,12 +142,10 @@ export default function MoodPage() {
         </h1>
         <ul>
           {notes.map((note, index) => (
-            <li
-              key={index}
-              className="text-black bg-gray-100 p-4 mb-2 rounded-lg shadow-md"
-            >
-              {note.text}
-            </li>
+            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <p className="text-gray-800 mb-2">{note.text}</p>
+              <p className="text-sm text-gray-400">{formatDate(note.date)}</p>
+            </div>
           ))}
         </ul>
       </div>
