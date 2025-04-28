@@ -47,6 +47,22 @@ const getMoodEmoji = (mood) => {
   }
 };
 
+function getMoodColor(mood) {
+  switch (mood) {
+    case "happy":
+      return "bg-yellow-100";
+    case "sad":
+      return "bg-blue-100";
+    case "calm":
+      return "bg-green-100";
+    case "energetic":
+      return "bg-orange-100";
+    default:
+      return "bg-gray-100";
+  }
+}
+
+
 export default function MoodPage() {
   const { mood } = useParams(); // `useParams()` ile parametreyi alıyoruz.
   const [note, setNote] = useState(""); // Kullanıcı notunu burda tutuyoruz
@@ -142,7 +158,7 @@ export default function MoodPage() {
         </h1>
         <ul>
           {notes.map((note, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
+            <div key={index} className={`p-4 rounded-lg shadow-md ${getMoodColor(note.mood)}`}>
               <p className="text-gray-800 mb-2">{note.text}</p>
               <p className="text-sm text-gray-400">{formatDate(note.date)}</p>
             </div>
