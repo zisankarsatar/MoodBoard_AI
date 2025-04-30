@@ -62,7 +62,6 @@ function getMoodColor(mood) {
   }
 }
 
-
 export default function MoodPage() {
   const { mood } = useParams(); // `useParams()` ile parametreyi alıyoruz.
   const [note, setNote] = useState(""); // Kullanıcı notunu burda tutuyoruz
@@ -75,7 +74,7 @@ export default function MoodPage() {
   };
 
   const today = new Date();
-  const formattedDate = today.toLocaleDateString("en-CA"); 
+  const formattedDate = today.toLocaleDateString("en-CA");
 
   const newNote = {
     mood,
@@ -83,11 +82,21 @@ export default function MoodPage() {
     date: formattedDate, // <<< BURADA TARİHİ EKLİYORUZ
   };
 
+  const handleDelete = async (id) => {
+    await fetch(`http://localhost:5001/notes/${id}`, {
+      method: "DELETE",
+    });
+
+    setNotes((prev) => prev.filter((note) => note.id !== id));
+  };
+
   useEffect(() => {
     fetch(`http://localhost:5001/notes?mood=${mood}`) // URL'de `mood` parametresi kullanarak filtreleme
       .then((response) => response.json())
       .then((data) => {
-        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sortedData = data.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
         setNotes(sortedData);
       });
   }, [mood]); // `mood` değiştiğinde notları yeniden çekiyoruz
@@ -104,7 +113,9 @@ export default function MoodPage() {
       })
         .then((response) => response.json())
         .then((data) => {
-          const sortedNotes = [...notes, data].sort((a, b) => new Date(b.date) - new Date(a.date));
+          const sortedNotes = [...notes, data].sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
+          );
           setNotes(sortedNotes); // Yeni notu state'e ekle
           setNote(""); // Textarea'yı temizle
         });
@@ -112,8 +123,8 @@ export default function MoodPage() {
   };
 
   function formatDate(dateString) {
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('tr-TR', options);
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(dateString).toLocaleDateString("tr-TR", options);
   }
 
   return (
@@ -158,10 +169,20 @@ export default function MoodPage() {
         </h1>
         <ul>
           {notes.map((note, index) => (
-            <div key={index} className={`p-4 rounded-lg shadow-md ${getMoodColor(note.mood)}`}>
-              <p className="text-gray-800 mb-2">{note.text}</p>
+            <div key={index} className="flex items-start justify-between p-4 rounded-2xl bg-yellow-50 shadow-md space-x-4 mb-4 border border-yellow-200">
+            <div>
+              <p className="text-base text-gray-800">{note.text}</p>
+              <p className="text-xs text-gray-500 mt-1 italic">Mood: {note.mood}</p>
               <p className="text-sm text-gray-400">{formatDate(note.date)}</p>
             </div>
+            <button
+              onClick={() => handleDelete(note.id)}
+              className="text-red-500 hover:text-red-700 text-sm"
+            >
+              🗑️
+            </button>
+          </div>
+          
           ))}
         </ul>
       </div>

@@ -31,12 +31,6 @@
       "date": "2025-04-19"
     },
     {
-      "id": "2765",
-      "text": "sevgili ben",
-      "mood": "calm",
-      "date": "2025-04-21"
-    },
-    {
       "id": "76a1",
       "mood": "happy",
       "text": "I love nature.",
@@ -65,6 +59,12 @@
       "mood": "happy",
       "text": "Bir numara :D",
       "date": "2025-04-29"
+    },
+    {
+      "id": "7361",
+      "mood": "calm",
+      "text": "selam canim",
+      "date": "2025-04-30"
     }
   ]
 }
