@@ -66,6 +66,7 @@ export default function MoodPage() {
   const { mood } = useParams(); // `useParams()` ile parametreyi alıyoruz.
   const [note, setNote] = useState(""); // Kullanıcı notunu burda tutuyoruz
   const [notes, setNotes] = useState([]); // Birden fazla notu tutacak array
+  const [filter, setFilter] = useState("");
 
   const data = moodData[mood.toLowerCase()];
 
@@ -101,6 +102,12 @@ export default function MoodPage() {
       });
   }, [mood]); // `mood` değiştiğinde notları yeniden çekiyoruz
 
+  const displayedNotes = filter
+    ? notes.filter((note) =>
+        note.text.toLowerCase().includes(filter.toLowerCase())
+      )
+    : notes;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (note.trim()) {
@@ -125,6 +132,23 @@ export default function MoodPage() {
   function formatDate(dateString) {
     const options = { day: "numeric", month: "long", year: "numeric" };
     return new Date(dateString).toLocaleDateString("tr-TR", options);
+  }
+
+  function highlightMatch(text, query) {
+    if (!query) return text;
+
+    const regex = new RegExp(`(${query})`, "gi");
+    const parts = text.split(regex);
+
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <mark key={i} className="bg-yellow-300">
+          {part}
+        </mark>
+      ) : (
+        part
+      )
+    );
   }
 
   return (
@@ -167,22 +191,35 @@ export default function MoodPage() {
           <span className="text-6xl animate-bounce">{getMoodEmoji(mood)}</span>
           {mood.toUpperCase()} MOOD
         </h1>
+        <input
+          type="text"
+          placeholder="Notlarda ara..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="mb-6 px-3 py-2 border rounded w-full focus:outline-none focus:ring"
+        />
         <ul>
-          {notes.map((note, index) => (
-            <div key={index} className="flex items-start justify-between p-4 rounded-2xl bg-yellow-50 shadow-md space-x-4 mb-4 border border-yellow-200">
-            <div>
-              <p className="text-base text-gray-800">{note.text}</p>
-              <p className="text-xs text-gray-500 mt-1 italic">Mood: {note.mood}</p>
-              <p className="text-sm text-gray-400">{formatDate(note.date)}</p>
-            </div>
-            <button
-              onClick={() => handleDelete(note.id)}
-              className="text-red-500 hover:text-red-700 text-sm"
+          {displayedNotes.map((note, index) => (
+            <div
+              key={index}
+              className="flex items-start justify-between p-4 rounded-2xl bg-yellow-50 shadow-md space-x-4 mb-4 border border-yellow-200"
             >
-              🗑️
-            </button>
-          </div>
-          
+              <div>
+                <p className="text-base text-gray-800">
+                  {highlightMatch(note.text, filter)}
+                </p>
+                <p className="text-xs text-gray-500 mt-1 italic">
+                  Mood: {note.mood}
+                </p>
+                <p className="text-sm text-gray-400">{formatDate(note.date)}</p>
+              </div>
+              <button
+                onClick={() => handleDelete(note.id)}
+                className="text-red-500 hover:text-red-700 text-sm"
+              >
+                🗑️
+              </button>
+            </div>
           ))}
         </ul>
       </div>
