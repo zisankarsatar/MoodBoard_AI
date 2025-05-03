@@ -19,7 +19,7 @@ next: 15.3.1,
 react: ^19.0.0
 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the resul.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
 
